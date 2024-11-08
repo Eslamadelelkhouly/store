@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/controller/provider/auth_provider/auth_provider.dart';
 import 'package:store/controller/provider/password_provider/password_provide.dart';
 import 'package:store/view/signin_view.dart';
 
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<PasswordProvide>(
             create: (_) => PasswordProvide()),
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

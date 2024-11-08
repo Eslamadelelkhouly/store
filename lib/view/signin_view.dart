@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
+import 'package:store/controller/provider/auth_provider/auth_provider.dart';
 import 'package:store/controller/provider/password_provider/password_provide.dart';
 import 'package:store/utils/colors.dart';
 
@@ -14,42 +15,46 @@ class SigninView extends StatelessWidget {
     final GlobalKey<FormState> formKey = GlobalKey();
     return Scaffold(
       body: Center(
-        child: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CommonFunctions.blankSpace(height * 0.10, 0),
-              Image.asset(
-                'assets/images/amazon_logo.png',
-                scale: 4,
+        child: Consumer<AuthProvider>(
+          builder: (context, provide, child) {
+            return Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CommonFunctions.blankSpace(height * 0.10, 0),
+                  Image.asset(
+                    'assets/images/amazon_logo.png',
+                    scale: 4,
+                  ),
+                  CommonFunctions.blankSpace(height * 0.05, 0),
+                  const Text(
+                    'Sign In',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                    ),
+                  ),
+                  CommonFunctions.blankSpace(height * 0.05, 0),
+                  CustomTextFormField(
+                    hinttext: 'Username',
+                    width: width,
+                  ),
+                  CommonFunctions.blankSpace(height * 0.03, 0),
+                  TextFormFieldPassword(width: width),
+                  CommonFunctions.blankSpace(height * 0.05, 0),
+                  CustomButton(
+                    text: 'Sign in',
+                    width: width,
+                    height: height,
+                    onPress: () {
+                      if (formKey.currentState!.validate()) {}
+                    },
+                  ),
+                ],
               ),
-              CommonFunctions.blankSpace(height * 0.05, 0),
-              const Text(
-                'Sign In',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                ),
-              ),
-              CommonFunctions.blankSpace(height * 0.05, 0),
-              CustomTextFormField(
-                hinttext: 'Username',
-                width: width,
-              ),
-              CommonFunctions.blankSpace(height * 0.03, 0),
-              TextFormFieldPassword(width: width),
-              CommonFunctions.blankSpace(height * 0.05, 0),
-              CustomButton(
-                text: 'Sign in',
-                width: width,
-                height: height,
-                onPress: () {
-                  if (formKey.currentState!.validate()) {}
-                },
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
