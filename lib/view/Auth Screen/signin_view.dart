@@ -1,15 +1,16 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
-import 'package:store/controller/provider/auth_provider/auth_provider.dart';
+import 'package:store/controller/provider/auth_provider/auth_provider_signup.dart';
 import 'package:store/controller/provider/password_provider/password_provide.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/utils/show_snack_bar.dart';
-import 'package:store/view/home_view.dart';
+import 'package:store/view/user/home/home_view.dart';
+import 'package:store/view/Auth%20Screen/login_view.dart';
 
 class SigninView extends StatefulWidget {
   const SigninView({super.key});
@@ -35,69 +36,84 @@ class _SigninViewState extends State<SigninView> {
           FocusScope.of(context).unfocus();
         },
         child: Center(
-          child: Consumer<AuthProviderCreate>(
+          child: Consumer<AuthProviderSignUpCreate>(
             builder: (context, provide, child) {
               return ModalProgressHUD(
                 inAsyncCall: provide.isLoading,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CommonFunctions.blankSpace(height * 0.10, 0),
-                      Image.asset(
-                        'assets/images/amazon_logo.png',
-                        scale: 4,
-                      ),
-                      CommonFunctions.blankSpace(height * 0.05, 0),
-                      const Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/amazon_logo.png',
+                          scale: 4,
                         ),
-                      ),
-                      CommonFunctions.blankSpace(height * 0.05, 0),
-                      CustomTextFormField(
-                        onChanged: (data) {
-                          email = data;
-                        },
-                        hinttext: 'Email',
-                        width: width,
-                      ),
-                      CommonFunctions.blankSpace(height * 0.03, 0),
-                      TextFormFieldPassword(
-                        onChanged: (data) {
-                          password = data;
-                        },
-                        width: width,
-                      ),
-                      CommonFunctions.blankSpace(height * 0.05, 0),
-                      CustomButton(
-                        text: 'Sign in',
-                        width: width,
-                        height: height,
-                        onPress: (BuildContext context) async {
-                          () async {
-                            if (_formKey.currentState!.validate()) {
-                              await provide.signUp(
-                                  email: email, password: password);
-                              if (provide.error.isNotEmpty &&
-                                  provide.error != 'success') {
-                                ShowSnackBar(context, provide.error);
-                                log('a7a');
-                              } else if (provide.state == true) {
-                                log('Signed up successfully');
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => const HomeView()),
+                        CommonFunctions.blankSpace(height * 0.05, 0),
+                        const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40,
+                          ),
+                        ),
+                        CommonFunctions.blankSpace(height * 0.05, 0),
+                        CustomTextFormField(
+                          onChanged: (data) {
+                            email = data;
+                          },
+                          hinttext: 'Email',
+                          width: width,
+                        ),
+                        CommonFunctions.blankSpace(height * 0.03, 0),
+                        TextFormFieldPassword(
+                          onChanged: (data) {
+                            password = data;
+                          },
+                          width: width,
+                        ),
+                        CommonFunctions.blankSpace(height * 0.05, 0),
+                        CustomButton(
+                          text: 'Sign Up',
+                          width: width,
+                          height: height,
+                          onPress: (BuildContext context) async {
+                            () async {
+                              if (_formKey.currentState!.validate()) {
+                                await provide.signUp(
+                                    email: email, password: password);
+                                if (provide.error.isNotEmpty &&
+                                    provide.error != 'success') {
+                                  ShowSnackBar(context, provide.error);
+                                  log('error');
+                                } else if (provide.state == true) {
+                                  log('Signed up successfully');
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      child: HomeScreen(),
+                                      type: PageTransitionType.leftToRight,
+                                    ),
                                   );
+                                }
                               }
-                            }
-                          }();
-                        },
-                      ),
-                    ],
+                            }();
+                          },
+                        ),
+                        CommonFunctions.blankSpace(height * 0.05, 0),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: LoginView(),
+                                    type: PageTransitionType.rightToLeft));
+                          },
+                          child: Text('Are you have an account?'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

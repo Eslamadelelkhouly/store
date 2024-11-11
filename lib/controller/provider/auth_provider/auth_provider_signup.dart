@@ -4,16 +4,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:store/errors/error_signup.dart';
-import 'package:store/services/auth/auth_services.dart';
 
-class AuthProviderCreate extends ChangeNotifier {
+class AuthProviderSignUpCreate extends ChangeNotifier {
   bool isLoading = false;
   String error = '';
   bool state = false;
 
   Future<void> signUp({required String email, required String password}) async {
-    AuthServices auth = AuthServices();
-
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       error =

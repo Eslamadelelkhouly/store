@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:store/controller/provider/auth_provider/auth_provider.dart';
+import 'package:store/controller/provider/auth_provider/auth_provider_login.dart';
+import 'package:store/controller/provider/auth_provider/auth_provider_signup.dart';
 import 'package:store/controller/provider/password_provider/password_provide.dart';
-import 'package:store/view/signin_view.dart';
+import 'package:store/view/Auth%20Screen/signin_view.dart';
+import 'package:store/view/user/home/home_view.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -24,14 +26,17 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<PasswordProvide>(
             create: (_) => PasswordProvide()),
-        ChangeNotifierProvider<AuthProviderCreate>(
-          create: (_) => AuthProviderCreate(),
+        ChangeNotifierProvider<AuthProviderSignUpCreate>(
+          create: (_) => AuthProviderSignUpCreate(),
+        ),
+        ChangeNotifierProvider<AuthProviderLogin>(
+          create: (_) => AuthProviderLogin(),
         ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.light(),
-        home: SigninView(),
+        home: HomeScreen(),
       ),
     );
   }
