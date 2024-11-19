@@ -144,6 +144,40 @@ class _HomeWidgetState extends State<HomeWidget> {
                 title: 'Minimum 70% off | Top Offers on Clothing',
                 ProductPicNamesList: clothingDealsList,
               ),
+              CommonFunctions.divider(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonFunctions.blankSpace(height * 0.01, 0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.03,
+                    ),
+                    child: Text(
+                      'Watch Sixer only on miniTV',
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: black,
+                          ),
+                    ),
+                  ),
+                  Container(
+                    height: height * 0.4,
+                    width: width,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.03,
+                      vertical: height * 0.01,
+                    ),
+                    child: Image(
+                      image: AssetImage(
+                        'assets/images/offersNsponcered/sixer.png',
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
