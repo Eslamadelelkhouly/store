@@ -68,6 +68,19 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   CarouselSliderController todaysDealsCourselController =
       CarouselSliderController();
+  headphoneDeals(int Index) {
+    switch (Index) {
+      case 0:
+        return 'Bose';
+      case 1:
+        return 'boAt';
+      case 2:
+        return 'Sony';
+      case 3:
+        return 'OnePlus';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -84,118 +97,210 @@ class _HomeWidgetState extends State<HomeWidget> {
             children: [
               HomeScreenUserAdressAppBar(height: height, width: width),
               CommonFunctions.divider(),
-              HomeScreenCategoriesList(height: height, width: width),
+              const HomeScreenCategoriesList(),
               CommonFunctions.blankSpace(height * 0.01, 0),
               CommonFunctions.divider(),
               HomeScreenBanner(height: height, width: width),
-              Padding(
+              TodaysDealHomeScreenWidget(
+                todaysDealsCourselController: todaysDealsCourselController,
+              ),
+              CommonFunctions.divider(),
+              Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: width * 0.03,
-                  vertical: height * 0.01,
-                ),
+                    horizontal: width * 0.03, vertical: height * 0.01),
+                width: width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CommonFunctions.blankSpace(height * 0.01, 0),
                     Text(
-                      '50%-80% | Latest deals.',
+                      'Latest launch in Headphones',
                       style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
                             color: black,
                           ),
                     ),
-                    CarouselSlider(
-                      carouselController: todaysDealsCourselController,
-                      options: CarouselOptions(
-                        height: height * 0.23,
-                        autoPlay: true,
-                      ),
-                      items: todaysDeals.map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              width: width,
-                              decoration: BoxDecoration(
-                                color: Colors.amber,
-                                image: DecorationImage(
-                                  fit: BoxFit.fitHeight,
-                                  image: AssetImage(
-                                    'assets/images/todays_deals/${i}',
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                    CommonFunctions.blankSpace(height * 0.01, 0),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: red,
-                          ),
-                          child: Text(
-                            'Upto 62% off',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(
-                                  color: white,
-                                ),
-                          ),
-                        ),
-                        CommonFunctions.blankSpace(0, width * 0.03),
-                        Text(
-                          'Deal of the day',
-                          style:
-                              Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    color: red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
-                      ],
-                    ),
                     CommonFunctions.blankSpace(height * 0.01, 0),
                     GridView.builder(
                       itemCount: 4,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
+                        crossAxisCount: 2,
                         mainAxisSpacing: 10,
-                        crossAxisSpacing: 20,
+                        crossAxisSpacing: 10,
                       ),
                       itemBuilder: (item, index) {
                         return InkWell(
-                          onTap: () {
-                            log(index.toString());
-                            todaysDealsCourselController.animateToPage(index);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: greyShade3),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/todays_deals/${todaysDeals[index]}',
+                          onTap: () {},
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/offersNsponcered/${headphonesDeals[index]}',
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                                fit: BoxFit.cover,
                               ),
-                            ),
+                              Text(
+                                headphoneDeals(index),
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
                           ),
                         );
                       },
                       shrinkWrap: true,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Explore More',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: blue,
+                            ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TodaysDealHomeScreenWidget extends StatelessWidget {
+  const TodaysDealHomeScreenWidget({
+    super.key,
+    required this.todaysDealsCourselController,
+  });
+
+  final CarouselSliderController todaysDealsCourselController;
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    return SizedBox(
+      width: width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: width * 0.03,
+          vertical: height * 0.01,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CommonFunctions.blankSpace(height * 0.01, 0),
+            Text(
+              '50%-80% | Latest deals.',
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                    color: black,
+                  ),
+            ),
+            CarouselSlider(
+              carouselController: todaysDealsCourselController,
+              options: CarouselOptions(
+                height: height * 0.23,
+                autoPlay: true,
+              ),
+              items: todaysDeals.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: width,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        image: DecorationImage(
+                          fit: BoxFit.fitHeight,
+                          image: AssetImage(
+                            'assets/images/todays_deals/${i}',
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            CommonFunctions.blankSpace(height * 0.01, 0),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: red,
+                  ),
+                  child: Text(
+                    'Upto 62% off',
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: white,
+                        ),
+                  ),
+                ),
+                CommonFunctions.blankSpace(0, width * 0.03),
+                Text(
+                  'Deal of the day',
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ],
+            ),
+            CommonFunctions.blankSpace(height * 0.01, 0),
+            GridView.builder(
+              itemCount: 4,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 20,
+              ),
+              itemBuilder: (item, index) {
+                return InkWell(
+                  onTap: () {
+                    log(index.toString());
+                    todaysDealsCourselController.animateToPage(index);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: greyShade3),
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/todays_deals/${todaysDeals[index]}',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                );
+              },
+              shrinkWrap: true,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'See all Deals',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: blue,
+                    ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -244,15 +349,12 @@ class HomeScreenBanner extends StatelessWidget {
 class HomeScreenCategoriesList extends StatelessWidget {
   const HomeScreenCategoriesList({
     super.key,
-    required this.height,
-    required this.width,
   });
-
-  final double height;
-  final double width;
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return SizedBox(
       height: height * 0.1,
       width: width,
