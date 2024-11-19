@@ -10,7 +10,6 @@ import 'package:store/view/user/cart/cart_screen.dart';
 import 'package:store/view/user/menu/menu_screen.dart';
 import 'package:store/view/user/profile/profile_screen.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -67,6 +66,8 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  CarouselSliderController todaysDealsCourselController =
+      CarouselSliderController();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -87,18 +88,111 @@ class _HomeWidgetState extends State<HomeWidget> {
               CommonFunctions.blankSpace(height * 0.01, 0),
               CommonFunctions.divider(),
               HomeScreenBanner(height: height, width: width),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonFunctions.blankSpace(height * 0.01, 0),
-                  Text(
-                    '50%-80% | Latest deals.',
-                    style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: black,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.03,
+                  vertical: height * 0.01,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonFunctions.blankSpace(height * 0.01, 0),
+                    Text(
+                      '50%-80% | Latest deals.',
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: black,
+                          ),
+                    ),
+                    CarouselSlider(
+                      carouselController: todaysDealsCourselController,
+                      options: CarouselOptions(
+                        height: height * 0.23,
+                        autoPlay: true,
+                      ),
+                      items: todaysDeals.map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: width,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                image: DecorationImage(
+                                  fit: BoxFit.fitHeight,
+                                  image: AssetImage(
+                                    'assets/images/todays_deals/${i}',
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    CommonFunctions.blankSpace(height * 0.01, 0),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: red,
+                          ),
+                          child: Text(
+                            'Upto 62% off',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
+                                  color: white,
+                                ),
+                          ),
                         ),
-                  )
-                ],
+                        CommonFunctions.blankSpace(0, width * 0.03),
+                        Text(
+                          'Deal of the day',
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    color: red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    CommonFunctions.blankSpace(height * 0.01, 0),
+                    GridView.builder(
+                      itemCount: 4,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 20,
+                      ),
+                      itemBuilder: (item, index) {
+                        return InkWell(
+                          onTap: () {
+                            log(index.toString());
+                            todaysDealsCourselController.animateToPage(index);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: greyShade3),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/todays_deals/${todaysDeals[index]}',
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      shrinkWrap: true,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -133,7 +227,7 @@ class HomeScreenBanner extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.amber,
                 image: DecorationImage(
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                   image: AssetImage(
                     'assets/images/carousel_slideshow/${i}.png',
                   ),
