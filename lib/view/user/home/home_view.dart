@@ -68,7 +68,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   CarouselSliderController todaysDealsCourselController =
       CarouselSliderController();
-  headphoneDeals(int Index) {
+  headphones(int Index) {
     switch (Index) {
       case 0:
         return 'Bose';
@@ -78,6 +78,19 @@ class _HomeWidgetState extends State<HomeWidget> {
         return 'Sony';
       case 3:
         return 'OnePlus';
+    }
+  }
+
+  clothing(int Index) {
+    switch (Index) {
+      case 0:
+        return 'Kurtas , serees & more';
+      case 1:
+        return 'Tops , dresses & more';
+      case 2:
+        return 'T-Shirt, jeans & more';
+      case 3:
+        return 'View all';
     }
   }
 
@@ -105,74 +118,105 @@ class _HomeWidgetState extends State<HomeWidget> {
                 todaysDealsCourselController: todaysDealsCourselController,
               ),
               CommonFunctions.divider(),
+              OtherOffGridWidget(
+                offerFor: 'headphones',
+                btnName: 'Explore More',
+                context: context,
+                title: 'Latest launch in Headphones',
+                ProductPicNamesList: headphonesDeals,
+              ),
               Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: width * 0.03, vertical: height * 0.01),
+                height: height * 0.35,
                 width: width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Latest launch in Headphones',
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w600,
-                            color: black,
-                          ),
-                    ),
-                    CommonFunctions.blankSpace(height * 0.01, 0),
-                    GridView.builder(
-                      itemCount: 4,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemBuilder: (item, index) {
-                        return InkWell(
-                          onTap: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/offersNsponcered/${headphonesDeals[index]}',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                headphoneDeals(index),
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      shrinkWrap: true,
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Explore More',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: blue,
-                            ),
-                      ),
-                    ),
-                  ],
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'assets/images/offersNsponcered/insurance.png'),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container OtherOffGridWidget(
+      {required BuildContext context,
+      required String offerFor,
+      required String title,
+      required String btnName,
+      required List<String> ProductPicNamesList}) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: width * 0.03, vertical: height * 0.01),
+      width: width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                  color: black,
+                ),
+          ),
+          CommonFunctions.blankSpace(height * 0.01, 0),
+          GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 4,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+            ),
+            itemBuilder: (item, index) {
+              return InkWell(
+                onTap: () {},
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/offersNsponcered/${ProductPicNamesList[index]}',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      offerFor == 'headphones'
+                          ? headphones(index)
+                          : clothing(index),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              );
+            },
+            shrinkWrap: true,
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              btnName,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: blue,
+                  ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -262,6 +306,7 @@ class TodaysDealHomeScreenWidget extends StatelessWidget {
             ),
             CommonFunctions.blankSpace(height * 0.01, 0),
             GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: 4,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
