@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:store/errors/error_signup.dart';
+import 'package:store/controller/errors/error_signup.dart';
 
 class AuthProviderLogin extends ChangeNotifier {
   bool isLoading = false;
