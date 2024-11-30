@@ -86,6 +86,17 @@ class _CartScreenState extends State<CartScreen> {
                   ],
                 ),
               ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  backgroundColor: amber,
+                  minimumSize: Size(width, height * 0.06),
+                ),
+                onPressed: () {},
+                child: Text('Proceed to Buy', style: textTheme.bodySmall),
+              ),
             ],
           ),
         ),
