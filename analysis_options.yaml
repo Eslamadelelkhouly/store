@@ -10,6 +10,7 @@
 analyzer:
   errors:
     sort_child_properties_last: ignore
+    prefer_const_constructors: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

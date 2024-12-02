@@ -16,70 +16,73 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final double height = MediaQuery.of(context).size.height;
     final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(width, height * 0.08),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: width * 0.03,
-            vertical: height * 0.01,
-          ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: appBarGradientColor,
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(width, height * 0.08),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.03,
+              vertical: height * 0.01,
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: appBarGradientColor,
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+            child: Row(
+              children: [
+                Image(
+                  image: const AssetImage(
+                    'assets/images/amazon_black_logo.png',
+                  ),
+                  width: height * 0.1,
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.notifications_none,
+                    size: height * 0.03,
+                  ),
+                  color: black,
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.search,
+                    size: height * 0.03,
+                  ),
+                  color: black,
+                ),
+              ],
             ),
           ),
-          child: Row(
-            children: [
-              Image(
-                image: const AssetImage(
-                  'assets/images/amazon_black_logo.png',
-                ),
-                width: height * 0.1,
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications_none,
-                  size: height * 0.03,
-                ),
-                color: black,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.search,
-                  size: height * 0.03,
-                ),
-                color: black,
-              ),
-            ],
-          ),
         ),
-      ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: height * 0.02),
-        width: width,
-        height: height,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CommonFunctions.blankSpace(height * 0.01, 0),
-              UserGreetings(width: width, textTheme: textTheme),
-              CommonFunctions.blankSpace(height * 0.01, 0),
-              GridButtons(width, textTheme),
-              CommonFunctions.blankSpace(height * 0.02, 0),
-              UserOrders(width: width, height: height, textTheme: textTheme),
-              CommonFunctions.blankSpace(height * 0.01, 0),
-              CommonFunctions.divider(),
-              KeepShopping(width: width, height: height, textTheme: textTheme),
-              CommonFunctions.blankSpace(height * 0.01, 0),
-              CommonFunctions.divider(),
-              BuyAgain(width: width, height: height, textTheme: textTheme),
-            ],
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: height * 0.02),
+          width: width,
+          height: height,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CommonFunctions.blankSpace(height * 0.01, 0),
+                UserGreetings(width: width, textTheme: textTheme),
+                CommonFunctions.blankSpace(height * 0.01, 0),
+                GridButtons(width, textTheme),
+                CommonFunctions.blankSpace(height * 0.02, 0),
+                UserOrders(width: width, height: height, textTheme: textTheme),
+                CommonFunctions.blankSpace(height * 0.01, 0),
+                CommonFunctions.divider(),
+                KeepShopping(
+                    width: width, height: height, textTheme: textTheme),
+                CommonFunctions.blankSpace(height * 0.01, 0),
+                CommonFunctions.divider(),
+                BuyAgain(width: width, height: height, textTheme: textTheme),
+              ],
+            ),
           ),
         ),
       ),

@@ -121,15 +121,21 @@ class _CartScreenState extends State<CartScreen> {
                           Expanded(
                             flex: 4,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image(
+                                const Image(
                                   image: AssetImage(
                                     'assets/images/todays_deals/todaysDeal1.png',
                                   ),
                                   fit: BoxFit.fitWidth,
                                 ),
+                                CommonFunctions.blankSpace(height * 0.01, 0),
                                 Container(
                                   height: height * 0.06,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.02,
+                                    vertical: height * 0.01,
+                                  ),
                                   width: width,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -163,6 +169,13 @@ class _CartScreenState extends State<CartScreen> {
                                         flex: 2,
                                         child: Container(
                                           child: Icon(Icons.add, color: black),
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              left: BorderSide(
+                                                color: greyShade3,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -171,9 +184,75 @@ class _CartScreenState extends State<CartScreen> {
                               ],
                             ),
                           ),
+                          CommonFunctions.blankSpace(0, width * 0.02),
                           Expanded(
-                            flex: 6,
-                            child: Column(),
+                            flex: 10,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Product Name',
+                                  style: textTheme.bodyLarge,
+                                ),
+                                CommonFunctions.blankSpace(height * 0.01, 0),
+                                Text(
+                                  '\$ 1807',
+                                  style: textTheme.displayMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                CommonFunctions.blankSpace(height * 0.005, 0),
+                                Text(
+                                  'Eligible for free Shipping',
+                                  style: textTheme.bodySmall!.copyWith(
+                                    color: grey,
+                                  ),
+                                ),
+                                CommonFunctions.blankSpace(height * 0.005, 0),
+                                Text(
+                                  'In Stock',
+                                  style: textTheme.bodySmall!.copyWith(
+                                    color: teal,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        'Delete',
+                                        style: textTheme.bodySmall,
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        backgroundColor: white,
+                                        side: BorderSide(color: greyShade3),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        'Save from later',
+                                        style: textTheme.bodySmall,
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        backgroundColor: white,
+                                        side: BorderSide(color: greyShade3),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
