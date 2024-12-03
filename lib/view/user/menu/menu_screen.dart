@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store/utils/colors.dart';
 import 'package:store/view/user/home/home_view.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -20,15 +21,25 @@ class _MenuScreenState extends State<MenuScreen> {
           preferredSize: Size(width * 1, height * 0.08),
           child: HomePageAppBar(width: width, height: height),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Container(
-                child: Text('menu screen'),
-              ),
+        body: Container(
+          height: height,
+          width: width,
+          padding: EdgeInsets.symmetric(
+            horizontal: width * 0.03,
+            vertical: height * 0.02,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: appBarGradientColor,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
             ),
-          ],
+          ),
+          child: Column(
+            children: [
+              
+            ],
+          ),
         ),
       ),
     );
