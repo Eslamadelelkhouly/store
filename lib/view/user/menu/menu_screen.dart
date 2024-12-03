@@ -21,24 +21,48 @@ class _MenuScreenState extends State<MenuScreen> {
           preferredSize: Size(width * 1, height * 0.08),
           child: HomePageAppBar(width: width, height: height),
         ),
-        body: Container(
-          height: height,
-          width: width,
-          padding: EdgeInsets.symmetric(
-            horizontal: width * 0.03,
-            vertical: height * 0.02,
-          ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: appBarGradientColor,
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+        body: SingleChildScrollView(
+          child: Container(
+            width: width,
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.03,
+              vertical: height * 0.02,
             ),
-          ),
-          child: Column(
-            children: [
-              
-            ],
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: appBarGradientColor,
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+            child: Column(
+              children: [
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 0.7,
+                  ),
+                  shrinkWrap: true,
+                  physics: const PageScrollPhysics(),
+                  itemCount: 18,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              AssetImage('assets/images/menu_pics/$index.png'),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: greyShade3),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
