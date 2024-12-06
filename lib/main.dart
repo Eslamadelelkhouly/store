@@ -7,6 +7,7 @@ import 'package:store/controller/provider/password_provider/password_provide.dar
 import 'package:store/utils/theme.dart';
 import 'package:store/view/Auth%20Screen/signin_view.dart';
 import 'package:store/view/user/home/home_view.dart';
+import 'package:store/view/user/user_data_screen/user_data_input_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme,
-        home: HomeScreen(),
+        home: UserDataInputScreen(),
       ),
     );
   }
