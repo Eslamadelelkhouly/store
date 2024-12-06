@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
 import 'package:store/model/user_model.dart';
+import 'package:store/view/Auth%20Screen/signin_view.dart';
 
 class UserDataCRUD {
-  static addNewUser({
+  static Future addNewUser({
     required UserModel usermodel,
     required BuildContext context,
   }) async {
@@ -20,6 +22,14 @@ class UserDataCRUD {
         CommonFunctions.showToast(
           context: context,
           message: 'User Added Successful',
+        );
+        Navigator.pushAndRemoveUntil(
+          context,
+          PageTransition(
+            child: const SigninView(),
+            type: PageTransitionType.rightToLeft,
+          ),
+          (route) => false,
         );
       });
     } catch (e) {

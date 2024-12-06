@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
+import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
+import 'package:store/model/user_model.dart';
 import 'package:store/utils/colors.dart';
 
 class UserDataInputScreen extends StatefulWidget {
@@ -11,17 +13,17 @@ class UserDataInputScreen extends StatefulWidget {
 }
 
 class _UserDataInputScreenState extends State<UserDataInputScreen> {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   @override
-  void initState() {
-    // TODO: implement initState
-    WidgetsBinding.instance.addPersistentFrameCallback(
-      (_) {
-        emailController.text = auth.currentUser!.email ?? ' ';
-      },
-    );
-  }
+  // void initState() {
+  //   // TODO: implement initState
+  //   WidgetsBinding.instance.addPersistentFrameCallback(
+  //     (_) {
+  //       emailController.text = auth.currentUser!.email ?? ' ';
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +66,15 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
           padding: EdgeInsets.symmetric(
               horizontal: width * 0.03, vertical: height * 0.02),
           child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text('Enter your Email', style: textTheme.bodyMedium),
+              CommonFunctions.blankSpace(height * 0.01, 0),
               TextField(
-                controller: nameController,
+                controller: emailController,
                 decoration: InputDecoration(
-                  hintText: 'Enter your name',
+                  hintText: 'Enter your Email',
                   hintStyle: textTheme.bodySmall,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5),
@@ -100,6 +106,63 @@ class _UserDataInputScreenState extends State<UserDataInputScreen> {
                 height * 0.02,
                 0,
               ),
+              Text('Password', style: textTheme.bodyMedium),
+              CommonFunctions.blankSpace(height * 0.01, 0),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Enter your password',
+                  hintStyle: textTheme.bodySmall,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(
+                      color: grey,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: const BorderSide(
+                      color: secondaryColor,
+                    ),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(
+                      color: grey,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(
+                      color: grey,
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () async {
+                  UserModel userModel = UserModel(
+                    password: passwordController.text.trim(),
+                    email: emailController.text.trim(),
+                    userType: 'user',
+                  );
+                  await UserDataCRUD.addNewUser(
+                      usermodel: userModel, context: context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: amber,
+                  minimumSize: Size(width, height * 0.06),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                child: Text(
+                  'Proceed',
+                  style: textTheme.bodyMedium!,
+                ),
+              )
             ],
           ),
         ),
