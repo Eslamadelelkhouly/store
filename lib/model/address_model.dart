@@ -5,7 +5,7 @@ class AddressModel {
   String? name;
   String? houseNumber;
   String? area;
-  String? mobileNumber;
+  String? email;
   String? landMark;
   String? pinCode;
   String? town;
@@ -15,7 +15,7 @@ class AddressModel {
     this.name,
     this.houseNumber,
     this.area,
-    this.mobileNumber,
+    this.email,
     this.landMark,
     this.pinCode,
     this.town,
@@ -28,7 +28,7 @@ class AddressModel {
       'name': name,
       'houseNumber': houseNumber,
       'area': area,
-      'mobileNumber': mobileNumber,
+      'email': email,
       'landMark': landMark,
       'pinCode': pinCode,
       'town': town,
@@ -43,8 +43,7 @@ class AddressModel {
       houseNumber:
           map['houseNumber'] != null ? map['houseNumber'] as String : null,
       area: map['area'] != null ? map['area'] as String : null,
-      mobileNumber:
-          map['mobileNumber'] != null ? map['mobileNumber'] as String : null,
+      email: map['email'] != null ? map['email'] as String : null,
       landMark: map['landMark'] != null ? map['landMark'] as String : null,
       pinCode: map['pinCode'] != null ? map['pinCode'] as String : null,
       town: map['town'] != null ? map['town'] as String : null,

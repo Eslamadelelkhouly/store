@@ -41,17 +41,20 @@ class UserDataCRUD {
     }
   }
 
-  static Future checkUser() async {
+  static Future<bool> checkUser() async {
+    bool userPresent = false;
     try {
       await firestore
           .collection('users')
           .where('email', isEqualTo: auth.currentUser!.email)
           .get()
           .then((value) {
-        value.size > 0 ? true : false;
+        value.size > 0 ? userPresent = true : userPresent = false;
       });
     } catch (e) {
       log(e.toString());
     }
+    log(userPresent.toString());
+    return userPresent;
   }
 }

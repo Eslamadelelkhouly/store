@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:store/constant/common_functions.dart';
-import 'package:store/constant/constants.dart';
 import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:store/model/user_model.dart';
 import 'package:store/utils/colors.dart';
