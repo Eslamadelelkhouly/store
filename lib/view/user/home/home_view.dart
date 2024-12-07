@@ -5,6 +5,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
+import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/view/user/cart/cart_screen.dart';
 import 'package:store/view/user/menu/menu_screen.dart';
@@ -68,6 +69,29 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   CarouselSliderController todaysDealsCourselController =
       CarouselSliderController();
+
+  checkUserAdress() async {
+    bool userAdressPresent = await UserDataCRUD.checkUserAdress();
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    if (userAdressPresent == false) {
+      showBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              height: height * 0.3,
+              width: width,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
+            );
+          });
+    }
+  }
+
   headphones(int Index) {
     switch (Index) {
       case 0:
@@ -92,6 +116,16 @@ class _HomeWidgetState extends State<HomeWidget> {
       case 3:
         return 'View all';
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        checkUserAdress();
+      },
+    );
   }
 
   @override
