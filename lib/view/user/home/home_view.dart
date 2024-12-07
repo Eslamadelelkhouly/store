@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
 import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:store/utils/colors.dart';
+import 'package:store/view/user/address_screen/address_screen.dart';
 import 'package:store/view/user/cart/cart_screen.dart';
 import 'package:store/view/user/menu/menu_screen.dart';
 import 'package:store/view/user/profile/profile_screen.dart';
@@ -109,6 +111,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return InkWell(
+                          onTap: () {
+                            if (index == 0) {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  child: const AddressScreen(),
+                                  type: PageTransitionType.rightToLeft,
+                                ),
+                              );
+                            }
+                          },
                           child: Container(
                             width: width * 0.35,
                             padding: EdgeInsets.symmetric(
