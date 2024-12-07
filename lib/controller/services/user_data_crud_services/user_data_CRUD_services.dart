@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
+import 'package:store/model/address_model.dart';
 import 'package:store/model/user_model.dart';
 import 'package:store/view/Auth%20Screen/signin_view.dart';
+import 'package:uuid/uuid.dart';
 
 class UserDataCRUD {
   static Future addNewUser({
@@ -56,5 +58,41 @@ class UserDataCRUD {
     }
     log(userPresent.toString());
     return userPresent;
+  }
+
+  static Future addUserAddress(
+      {required BuildContext context,
+      required AddressModel addressModel}) async {
+    try {
+      Uuid uuid = const Uuid();
+      String docID = uuid.v1();
+      await firestore
+          .collection('Adress')
+          .doc(auth.currentUser!.email)
+          .collection('address')
+          .doc(docID)
+          .set(addressModel.toMap())
+          .whenComplete(() {
+        log('Data Added');
+        CommonFunctions.showToast(
+          context: context,
+          message: 'Address Added Successful',
+        );
+        Navigator.pushAndRemoveUntil(
+          context,
+          PageTransition(
+            child: const SigninView(),
+            type: PageTransitionType.rightToLeft,
+          ),
+          (route) => false,
+        );
+      });
+    } catch (e) {
+      log(e.toString());
+      CommonFunctions.showToast(
+        context: context,
+        message: e.toString(),
+      );
+    }
   }
 }

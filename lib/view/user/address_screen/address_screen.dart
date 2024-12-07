@@ -111,6 +111,18 @@ class _AddressScreenState extends State<AddressScreen> {
                   hintText: 'Enter your state',
                   title: 'Enter your state',
                 ),
+                CommonFunctions.blankSpace(height * 0.04, 0),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: amber,
+                    minimumSize: Size(width, height * 0.06),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Text('Add Address', style: textTheme.bodyMedium),
+                ),
                 CommonFunctions.blankSpace(height * 0.02, 0),
               ],
             ),
