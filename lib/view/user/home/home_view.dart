@@ -87,6 +87,74 @@ class _HomeWidgetState extends State<HomeWidget> {
                   topRight: Radius.circular(10),
                 ),
               ),
+              padding: EdgeInsets.symmetric(
+                vertical: height * 0.04,
+                horizontal: width * 0.03,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Add Address',
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  SizedBox(
+                    height: height * 0.15,
+                    child: ListView.builder(
+                      itemCount: 1,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          child: Container(
+                            width: width * 0.35,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: width * 0.03,
+                              vertical: height * 0.01,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: greyShade3,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Builder(
+                              builder: (context) {
+                                if (index == 0) {
+                                  return Text(
+                                    'Add Address',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: greyShade3,
+                                        ),
+                                  );
+                                }
+                                return Text(
+                                  'Add Address',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: greyShade3,
+                                      ),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             );
           });
     }
