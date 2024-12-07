@@ -95,4 +95,22 @@ class UserDataCRUD {
       );
     }
   }
+
+  static Future<bool> checkUserAdress() async {
+    bool addressPresent = false;
+    try {
+      await firestore
+          .collection('Adress')
+          .doc(auth.currentUser!.email)
+          .collection('address')
+          .get()
+          .then((value) {
+        value.size > 0 ? addressPresent = true : addressPresent = false;
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+    log(addressPresent.toString());
+    return addressPresent;
+  }
 }
