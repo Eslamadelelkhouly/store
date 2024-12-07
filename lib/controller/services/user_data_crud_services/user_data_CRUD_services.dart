@@ -134,4 +134,27 @@ class UserDataCRUD {
     }
     return allAddress;
   }
+
+  static Future getCurrentSelectedAddress() async {
+    AddressModel defaultAddressModel = AddressModel();
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
+          .collection('Adress')
+          .doc(auth.currentUser!.email)
+          .collection('address')
+          .get();
+      snapshot.docs.forEach(
+        (element) {
+          AddressModel currentAddress = AddressModel.fromMap(element.data());
+          if (currentAddress.isDefault == true) {
+            defaultAddressModel = currentAddress;
+          }
+        },
+      );
+    } catch (e) {
+      log('error found');
+      log(e.toString());
+    }
+    return defaultAddressModel;
+  }
 }
