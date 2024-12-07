@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/controller/provider/address_provider.dart';
 import 'package:store/controller/provider/auth_provider/auth_provider_login.dart';
 import 'package:store/controller/provider/auth_provider/auth_provider_signup.dart';
 import 'package:store/controller/provider/password_provider/password_provide.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AuthProviderLogin>(
           create: (_) => AuthProviderLogin(),
+        ),
+        ChangeNotifierProvider<AddressProvider>(
+          create: (_) => AddressProvider(),
         ),
       ],
       child: MaterialApp(

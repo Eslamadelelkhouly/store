@@ -4,9 +4,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
+import 'package:store/controller/provider/address_provider.dart';
 import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
+import 'package:store/model/address_model.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/view/user/address_screen/address_screen.dart';
 import 'package:store/view/user/cart/cart_screen.dart';
@@ -205,6 +208,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         checkUserAdress();
+        context.read<AddressProvider>().getCurrentSelectedAddress();
       },
     );
   }
@@ -609,6 +613,35 @@ class HomeScreenUserAdressAppBar extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
+      ),
+      child: Consumer<AddressProvider>(
+        builder: (context, AddressProvider, child) {
+          if (AddressProvider.fetchedCurrentSelectedAddress == true) {
+            AddressModel SelectedAddress =
+                AddressProvider.currentSelectedAddress;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.location_pin, color: black),
+                CommonFunctions.blankSpace(0, width * 0.02),
+                Text(
+                  'Deliver to ${SelectedAddress.name} - ${SelectedAddress.town}, ${SelectedAddress.state}',
+                ),
+              ],
+            );
+          } else {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.location_pin, color: black),
+                CommonFunctions.blankSpace(0, width * 0.02),
+                Text(
+                  'Deliver to user - City',
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
