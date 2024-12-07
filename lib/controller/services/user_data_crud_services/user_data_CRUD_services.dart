@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:store/constant/common_functions.dart';
@@ -7,7 +8,6 @@ import 'package:store/constant/constants.dart';
 import 'package:store/model/address_model.dart';
 import 'package:store/model/user_model.dart';
 import 'package:store/view/Auth%20Screen/signin_view.dart';
-import 'package:uuid/uuid.dart';
 
 class UserDataCRUD {
   static Future addNewUser({
@@ -60,12 +60,12 @@ class UserDataCRUD {
     return userPresent;
   }
 
-  static Future addUserAddress(
-      {required BuildContext context,
-      required AddressModel addressModel}) async {
+  static Future addUserAddress({
+    required BuildContext context,
+    required AddressModel addressModel,
+    required String docID,
+  }) async {
     try {
-      Uuid uuid = const Uuid();
-      String docID = uuid.v1();
       await firestore
           .collection('Adress')
           .doc(auth.currentUser!.email)
@@ -78,14 +78,7 @@ class UserDataCRUD {
           context: context,
           message: 'Address Added Successful',
         );
-        Navigator.pushAndRemoveUntil(
-          context,
-          PageTransition(
-            child: const SigninView(),
-            type: PageTransitionType.rightToLeft,
-          ),
-          (route) => false,
-        );
+        Navigator.pop(context);
       });
     } catch (e) {
       log(e.toString());
@@ -112,5 +105,33 @@ class UserDataCRUD {
     }
     log(addressPresent.toString());
     return addressPresent;
+  }
+
+  static Future<List<AddressModel>> getAllAddress() async {
+    List<AddressModel> allAddress = [];
+    AddressModel defaultAddress = AddressModel();
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
+          .collection('Adress')
+          .doc(auth.currentUser!.email)
+          .collection('address')
+          .get();
+      snapshot.docs.forEach(
+        (element) {
+          allAddress.add(AddressModel.fromMap(element.data()));
+          AddressModel currentAddress = AddressModel.fromMap(element.data());
+          if (currentAddress.isDefault == true) {
+            defaultAddress = currentAddress;
+          }
+        },
+      );
+    } catch (e) {
+      log('error found');
+      log(e.toString());
+    }
+    for (var data in allAddress) {
+      log(data.toMap().toString());
+    }
+    return allAddress;
   }
 }

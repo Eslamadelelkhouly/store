@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:store/constant/common_functions.dart';
+import 'package:store/constant/constants.dart';
+import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
+import 'package:store/model/address_model.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/view/user/address_screen/widget/address_screen_textField.dart';
+import 'package:uuid/uuid.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -113,7 +117,27 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
                 CommonFunctions.blankSpace(height * 0.04, 0),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Uuid uuid = Uuid();
+                    String docID = uuid.v1();
+                    AddressModel addressModel = AddressModel(
+                      name: nameController.text.trim(),
+                      houseNumber: housenumberController.text.trim(),
+                      area: areaController.text.trim(),
+                      email: auth.currentUser!.email,
+                      landMark: landmarkController.text.trim(),
+                      pinCode: pincodeController.text.trim(),
+                      town: townController.text.trim(),
+                      state: stateController.text.trim(),
+                      docID: docID,
+                      isDefault: true,
+                    );
+                    UserDataCRUD.addUserAddress(
+                      context: context,
+                      addressModel: addressModel,
+                      docID: docID,
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: amber,
                     minimumSize: Size(width, height * 0.06),
