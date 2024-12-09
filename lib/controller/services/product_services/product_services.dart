@@ -4,8 +4,11 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
+import 'package:store/controller/provider/product_provider/product_provider.dart';
+import 'package:store/main.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductServices {
@@ -42,5 +45,6 @@ class ProductServices {
         imagesURL.add(imageURL);
       },
     );
+    context.read<SellerProductProvider>().updateImagesURL(imagesURL: imagesURL);
   }
 }
