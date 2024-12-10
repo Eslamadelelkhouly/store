@@ -5,7 +5,9 @@ import 'package:store/controller/provider/address_provider.dart';
 import 'package:store/controller/provider/auth_provider/auth_provider_login.dart';
 import 'package:store/controller/provider/auth_provider/auth_provider_signup.dart';
 import 'package:store/controller/provider/password_provider/password_provide.dart';
+import 'package:store/controller/provider/product_provider/product_provider.dart';
 import 'package:store/utils/theme.dart';
+import 'package:store/view/seller/add_product_screen/add_products_screen.dart';
 import 'package:store/view/seller/seller_presetint_navber/seller_navbar_screen.dart';
 import 'firebase_options.dart';
 
@@ -20,7 +22,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,11 +37,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AddressProvider>(
           create: (_) => AddressProvider(),
         ),
+        ChangeNotifierProvider<SellerProductProvider>(
+          create: (_) => SellerProductProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme,
-        home: SellerNavbarScreen(),
+        home: AddProductsScreen(),
       ),
     );
   }

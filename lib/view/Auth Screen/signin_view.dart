@@ -10,9 +10,9 @@ import 'package:store/controller/provider/password_provider/password_provide.dar
 import 'package:store/controller/services/user_data_crud_services/user_data_CRUD_services.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/utils/show_snack_bar.dart';
-import 'package:store/view/user/home/home_view.dart';
 import 'package:store/view/Auth%20Screen/login_view.dart';
 import 'package:store/view/user/user_data_screen/user_data_input_screen.dart';
+import 'package:store/view/user/user_persistant/nav_bar_home.dart';
 
 class SigninView extends StatefulWidget {
   const SigninView({super.key});

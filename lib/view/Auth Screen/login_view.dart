@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/controller/provider/auth_provider/auth_provider_login.dart';
 import 'package:store/utils/show_snack_bar.dart';
-import 'package:store/view/user/home/home_view.dart';
 import 'package:store/view/Auth%20Screen/signin_view.dart';
+import 'package:store/view/user/user_persistant/nav_bar_home.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
