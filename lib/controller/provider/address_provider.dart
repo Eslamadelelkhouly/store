@@ -7,6 +7,7 @@ class AddressProvider extends ChangeNotifier {
   AddressModel currentSelectedAddress = AddressModel();
   bool fetchedCurrentSelectedAddress = false;
   bool fetchedAllAddress = false;
+  bool addressPresent = false;
 
   getAllAddress() async {
     allAddressModel = await UserDataCRUD.getAllAddress();
@@ -16,6 +17,7 @@ class AddressProvider extends ChangeNotifier {
 
   getCurrentSelectedAddress() async {
     currentSelectedAddress = await UserDataCRUD.getCurrentSelectedAddress();
+    addressPresent = await UserDataCRUD.checkUserAdress();
     fetchedCurrentSelectedAddress = true;
     notifyListeners();
   }
