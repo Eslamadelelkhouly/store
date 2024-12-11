@@ -8,7 +8,7 @@ import 'package:store/controller/provider/password_provider/password_provide.dar
 import 'package:store/controller/provider/product_provider/product_provider.dart';
 import 'package:store/utils/theme.dart';
 import 'package:store/view/seller/add_product_screen/add_products_screen.dart';
-import 'package:store/view/seller/seller_presetint_navber/seller_navbar_screen.dart';
+import 'package:store/view/user/user_persistant/nav_bar_home.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme,
-        home: AddProductsScreen(),
+        home : AddProductsScreen(),
       ),
     );
   }

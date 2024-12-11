@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,49 +86,74 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                       .read<SellerProductProvider>()
                       .productImages
                       .isEmpty) {
-                    return Container(
-                      height: height * 0.23,
-                      width: width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: greyShade3),
+                    return InkWell(
+                      onTap: () {
+                        context
+                            .read<SellerProductProvider>()
+                            .fetchProductImagesFromGallery(context: context);
+                      },
+                      child: Container(
+                        height: height * 0.23,
+                        width: width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: greyShade3),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              size: height * 0.09,
+                              color: greyShade3,
+                            ),
+                            Text(
+                              'Add Product',
+                              style: textTheme.displayMedium!.copyWith(
+                                color: greyShade3,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
+                  } else {
+                    List<File> images =
+                        context.read<SellerProductProvider>().productImages;
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        height: height * 0.23,
+                        autoPlay: true,
+                      ),
+                      items: images.map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: width,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  image: FileImage(
+                                    File(i.path),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    );
                   }
-                  return Container(
-                    height: height * 0.23,
-                    width: width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: greyShade3),
-                    ),
-                  );
+                  // return Container(
+                  //   height: height * 0.23,
+                  //   width: width,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(10),
+                  //     border: Border.all(color: greyShade3),
+                  //   ),
+                  // );
                 },
               ),
-              // CarouselSlider(
-              //   options: CarouselOptions(
-              //     height: height * 0.23,
-              //     autoPlay: true,
-              //   ),
-              //   items: [1, 2, 3, 4, 5].map((i) {
-              //     return Builder(
-              //       builder: (BuildContext context) {
-              //         return Container(
-              //           width: width,
-              //           decoration: BoxDecoration(
-              //             color: Colors.amber,
-              //             image: DecorationImage(
-              //               fit: BoxFit.fitHeight,
-              //               image: AssetImage(
-              //                 'assets/images/carousel_slideshow/${i}.png',
-              //               ),
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //     );
-              //   }).toList(),
-              // ),
             ],
           ),
         ),
