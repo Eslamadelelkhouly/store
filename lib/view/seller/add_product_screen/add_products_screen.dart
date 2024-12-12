@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
 import 'package:store/controller/provider/product_provider/product_provider.dart';
+import 'package:store/model/product_model.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/view/seller/add_product_screen/widgets/add_product_detials_textfield.dart';
+import 'package:uuid/uuid.dart';
 
 class AddProductsScreen extends StatefulWidget {
   const AddProductsScreen({super.key});
@@ -189,7 +191,45 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 ProductDetails(height, textTheme, width),
                 CommonFunctions.blankSpace(height * 0.03, width),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (context
+                        .read<SellerProductProvider>()
+                        .productImages
+                        .isNotEmpty) {
+                      await context
+                          .read<SellerProductProvider>()
+                          .UplodeProductImagesToFirebaseStorage(
+                              context: context);
+                      List<String> ImagesURL =
+                          context.read<SellerProductProvider>().productImageURL;
+                      Uuid uuid = Uuid();
+                      String selllerID = auth.currentUser!.email.toString();
+                      String productID = "$selllerID${uuid.v4().toString()}";
+                      ProductModel model = ProductModel(
+                        imagesURL: ImagesURL,
+                        name: productNameController.text.trim(),
+                        category: dropDownValue,
+                        description: productDescriptionController.text.trim(),
+                        brandName: productBrandNameController.text.trim(),
+                        manufacturerName:
+                            productManufacturerNameController.text.trim(),
+                        countryOfOrigin:
+                            productCountryOfOriginController.text.trim(),
+                        specifications:
+                            productspecificationsController.text.trim(),
+                        price: double.parse(
+                            productDiscountedPriceController.text.trim()),
+                        discountPercentage: int.parse(
+                            productDiscountPercentageController.text.trim()),
+                        productID: productID,
+                        productSellerID: selllerID,
+                        inStock: true,
+                        uploadedAt: DateTime.now(),
+                        discountedPrice: double.parse(
+                            productDiscountedPriceController.text.trim()),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(width, height * 0.06),
                     backgroundColor: amber,

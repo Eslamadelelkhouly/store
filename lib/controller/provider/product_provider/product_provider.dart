@@ -20,4 +20,9 @@ class SellerProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  UplodeProductImagesToFirebaseStorage({required BuildContext context}) async {
+    productImageURL = await ProductServices.uplodeImageToFirebase(
+        Images: productImages, context: context);
+    notifyListeners();
+  }
 }
