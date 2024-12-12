@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
 import 'package:store/controller/provider/product_provider/product_provider.dart';
-import 'package:store/controller/provider/product_provider/product_provider.dart';
 import 'package:store/utils/colors.dart';
 import 'package:store/view/seller/add_product_screen/widgets/add_product_detials_textfield.dart';
 
@@ -188,6 +187,21 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                 ),
                 CommonFunctions.blankSpace(height * 0.08, width),
                 ProductDetails(height, textTheme, width),
+                CommonFunctions.blankSpace(height * 0.03, width),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(width, height * 0.06),
+                    backgroundColor: amber,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    'Add Product',
+                    style: textTheme.bodyMedium,
+                  ),
+                ),
               ],
             ),
           ),
