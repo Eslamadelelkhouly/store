@@ -9,6 +9,7 @@ import 'package:store/constant/common_functions.dart';
 import 'package:store/constant/constants.dart';
 import 'package:store/controller/provider/product_provider/product_provider.dart';
 import 'package:store/main.dart';
+import 'package:store/model/product_model.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductServices {
@@ -46,5 +47,31 @@ class ProductServices {
       },
     );
     context.read<SellerProductProvider>().updateImagesURL(imagesURL: imagesURL);
+  }
+
+  static Future addProduct({
+    required BuildContext context,
+    required ProductModel productModel,
+  }) async {
+    try {
+      await firestore
+          .collection('Products')
+          .doc(productModel.productID)
+          .set(productModel.toMap())
+          .whenComplete(() {
+        log('Data Added');
+        Navigator.pop(context);
+        CommonFunctions.showToast(
+          context: context,
+          message: 'Product Added Successful',
+        );
+      });
+    } catch (e) {
+      log(e.toString());
+      CommonFunctions.showToast(
+        context: context,
+        message: e.toString(),
+      );
+    }
   }
 }
